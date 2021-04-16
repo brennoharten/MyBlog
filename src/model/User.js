@@ -4,12 +4,12 @@ const database = require('../database/index')
 class User extends Model{}
 
 User.init({
-    firtsName: {
+    firstName: {
         type: DataTypes.STRING,
         allowNull: false
 
     },
-    lastNamee: {
+    lastName: {
         type: DataTypes.STRING,
         allowNull: false
 
@@ -30,7 +30,7 @@ User.init({
 
     }
 }, {
-    database,
+    sequelize: database,
     modelName: 'users'
 })
 
