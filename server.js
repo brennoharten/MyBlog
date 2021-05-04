@@ -15,22 +15,25 @@ app.get("/", function(req,res){
     res.render('pages/home')
 })
 
-app.get("/users", async function(req,res){
-  const users = await User.findAll()
-  res.send(JSON.stringify(users))
+app.get('/login', function(req, res) {
+    
 })
 
-app.post("/user", async function(req,res){
-  const user = await User.create({
-    firstName: "brenno",
-    lastName: "harten",
-    age: 20,
-    email: "brennoharten",
-    isActive: true
-  })
-  res.send(JSON.stringify(user))
+app.post('/login', function(req, res) {
+  
 })
 
+app.post('/logout', function(req, res) {
+  
+})
+
+app.get('/register', function(req, res) {
+    res.render('pages/home')
+})
+
+app.post('/register', function(req, res) {
+  
+})
 
 app.listen(port, async function(){
     console.log(`Server is running at port:${port}`)
