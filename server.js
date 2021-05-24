@@ -16,7 +16,7 @@ app.get("/", function(req,res){
 })
 
 app.get('/login', function(req, res) {
-    
+    res.render('pages/login')
 })
 
 app.post('/login', function(req, res) {
@@ -28,7 +28,7 @@ app.post('/logout', function(req, res) {
 })
 
 app.get('/register', function(req, res) {
-    res.render('pages/home')
+    res.render('pages/register')
 })
 
 app.post('/register', function(req, res) {
