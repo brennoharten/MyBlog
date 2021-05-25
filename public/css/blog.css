@@ -101,3 +101,9 @@ border-top: .05rem solid #e5e5e5;
 .blog-footer p:last-child {
 margin-bottom: 0;
 }
+
+.form-register {
+    width: 100%;
+    max-width: 400px;
+    margin: auto;
+}

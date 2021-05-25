@@ -1,14 +1,41 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Register</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
-    <script src='main.js'></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%- include('../partials/head.ejs') %> 
 </head>
 <body>
-    
+    <div class="container">
+
+        <%- include('../partials/header.ejs') %> 
+        
+        <div class="form-register mb-5 mt-5">
+            <form action = "/register" method="POST">
+                <h1>New User</h1>
+                <div class="form-floating mb-3">
+                    <input name="username" type="text" class="form-control" id="floatingUsername" placeholder="Username">
+                    <label for="floatingUsername">Username</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input name="email" type="email" class="form-control" id="floatingEmail" placeholder="Email">
+                    <label for="floatingEmail">Email address</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input name="password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                    <label for="floatingPassword">Password</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input name="passwordConfirmation"type="password" class="form-control" id="floatingPasswordConfirmation" placeholder="Password Confirmation">
+                    <label for="floatingPasswordConfirmation">Password Confirmation</label>
+                </div>
+                <button type="submit" class="btn btn-primary mb-3">Register</button>
+        
+            </form>
+        </div>
+        <%- include('../partials/footer.ejs') %> 
+    </div>
+    <%- include('../partials/scripts.ejs') %> 
 </body>
 </html>
