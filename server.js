@@ -37,16 +37,24 @@ app.get('/register', function(req, res) {
 
 app.post('/register', function(req, res) {
     
+    console.log(req.body)
+    
     let username = req.body.username
     let email = req.body.email
     let password = req.body.password
     let passwordConfirmation = req.body.passwordConfirmation
 
-    
-    
-    /* auth.createAccount()
-     */
-    res.send(req.body.email)
+    if(password === passwordConfirmation) {
+        Account.create({
+            username: username,
+            email:email,
+            password:password
+        })
+        res.redirect('/login')
+
+    } else {
+        res.send("senhas diferentes")
+    }
 
 })
 
