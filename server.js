@@ -6,11 +6,11 @@ const Profile = require('./src/model/Profile.js')
 
 const app = express()
 const port = 8080
-const session = require('expresse-session')
+const session = require('express-session')
 
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
-app.set('view engine', 'ejs')
+
 
 const auth = require('./src/service/auth/auth')
 const bcrypt = require('bcrypt');
@@ -42,22 +42,40 @@ passport.use(new LocalStrategy(
             }
         })
     }
-));
-
-app.use('/public', express.static('public'))
-
-app.use(express.cookieParser())
-app.use(session({
-    secret:"1234567890123456"
-}))
+    ));
+    
+    
+    app.use('/public', express.static('public'))
+    
+    app.use(express.cookieParser())
+    app.use(session({
+        secret:"1234567890123456"
+    }))
+    
+    
+    
+    app.get("/", function(req,res){
+        res.render('pages/home')
+    })
+    
 app.use(passport.initialize())
 app.use(passport.session())
 
+app.set('view engine', 'ejs')
 
+passport.serializeUser(function(user, done) {
+    done(null, user.id);
+});
 
-app.get("/", function(req,res){
-    res.render('pages/home')
-})
+passport.deserializeUser(async function(id, done) {
+    let account = await Account.findOne({
+        where:{
+            id:id
+        }
+    })    
+
+    done(err, account);
+});
 
 app.get('/login', function(req, res) {
     res.render('pages/login')
