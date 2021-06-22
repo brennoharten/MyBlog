@@ -1,22 +1,26 @@
 const express = require('express')
-//const User = require('./src/model/User.js')
+const User = require('./src/model/User.js')
 const Account = require('./src/model/Account.js')
 const Profile = require('./src/model/Profile.js')
-//const faker = require('faker')
+const bcrypt = require('bcrypt');
+const flash = require('connect-flash');
 
+
+const passport = require('passport')
 const app = express()
 const port = 8080
 const session = require('express-session')
+const cookieParser = require('cookie-parser')
+
 
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
+app.use(flash())
 
 
 const auth = require('./src/service/auth/auth')
-const bcrypt = require('bcrypt');
 const saltRounds = 12;
 
-const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 
 passport.use(new LocalStrategy(
@@ -29,7 +33,7 @@ passport.use(new LocalStrategy(
         })
 
         if (account == null) {
-            return done(null, false, {message: "Invalid username"})
+            return done(null, false, {message: "Invalid username or password"})
             res.send("deu errado")
         }
 
@@ -38,7 +42,7 @@ passport.use(new LocalStrategy(
                 //todo criar sessão
                 return done(null, account)
             } else {
-                return done(null, false, {message: "Invalid password"})
+                return done(null, false, {message: "Invalid username or password"})
             }
         })
     }
@@ -47,7 +51,7 @@ passport.use(new LocalStrategy(
     
     app.use('/public', express.static('public'))
     
-    app.use(express.cookieParser())
+    app.use(cookieParser())
     app.use(session({
         secret:"1234567890123456"
     }))
@@ -55,7 +59,7 @@ passport.use(new LocalStrategy(
     
     
     app.get("/", function(req,res){
-        res.render('pages/home')
+        res.render('pages/home', {user: req.user})
     })
     
 app.use(passport.initialize())
@@ -68,42 +72,30 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(async function(id, done) {
-    let account = await Account.findOne({
-        where:{
-            id:id
-        }
-    })    
+    try {
+        let account = await Account.findOne({
+            where:{
+                id:id
+            }
+        })
+        done(null, account);
 
-    done(err, account);
+    } catch(err) {
+        done(err, account);
+    }
 });
 
 app.get('/login', function(req, res) {
-    res.render('pages/login')
+    res.render('pages/login', {error: req.flash('error')[0]})
 })
 
-app.post('/login', async function(req, res) {
-
-    let username = req.body.username
-    let password = req.body.password
-
-    let account = await Account.findOne({
-        where:{
-            username:username
-        }
+app.post('/login',
+    passport.authenticate('local', { 
+        successRedirect: '/',
+        failureRedirect: '/login',
+        failureFlash: true
     })
-
-    if(account != null) {
-        bcrypt.compare(password, account.password, function(err, result){
-            if(result){
-                //todo criar sessão
-                res.redirect('/')
-            }
-        })
-    }else {
-        res.send("deu errado")
-    }
-
-})
+);
 
 app.post('/logout', function(req, res) {
 
