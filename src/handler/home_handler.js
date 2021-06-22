@@ -2,8 +2,11 @@ const express = require('express')
 const router = express.Router()
 const auth = require('../service/auth')
 const flash = require('connect-flash')
-const bcrypt = require('bcrypt')
 const session = require('express-session')
+const bcrypt = require('bcrypt')
+
+const Account = require('../model/Account')
+const Category = require('../model/Category')
 
 router.use(flash())
 router.use(session({
@@ -13,8 +16,13 @@ router.use(session({
 router.use(auth.initialize())
 router.use(auth.session())
 
-router.get("/", function(req,res){
-    res.render('pages/home', {user: req.user})
+router.get("/", async function(req,res){
+
+    let caegories = await Category.findAll()
+
+    res.render('pages/home', {
+        user: req.user, 
+        caegories: categories})
 })
 
 
@@ -49,8 +57,9 @@ router.post('/register', function(req, res) {
 
     if(password === passwordConfirmation) {
 
-        bcrypt.hash(password, saltRounds, function(err, hash) {
-            Account.create({
+        bcrypt.hash(password, 12, function(err, hash) {
+            
+            let account = await Account.create({
                 username: username,
                 email:email,
                 password:hash

@@ -1,5 +1,6 @@
 const { Model, DataTypes } = require('sequelize')
 const database = require('../database/index')
+const Account = require('./Account')
 
 class Profile extends Model{}
 
@@ -21,5 +22,7 @@ Profile.init({
     modelName: 'Profile',
     tableName: 'profiles'
 })
+
+//Profile.Account = Profile.belongsTo(Account)
 
 module.exports = Profile

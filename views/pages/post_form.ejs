@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <%- include('../partials/head.ejs') %>
+    </head>
+    <body>
+        <div class="container">
+            <%- include('../partials/header.ejs') %>
+
+            <main>
+                
+                <div class="form-register mb-5 mt-5">
+                    <h3>Post Cadaster</h3>
+                    <form action="/admin/category/add" method="POST">
+                        <div class="mb-3">
+                            <label for="InputPostTitle" class="form-label">Title</label>
+                            <input name="postTitle" type="text" class="form-control" id="InputPostTitle" aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="InputPostCategory" class="form-label">Category</label>
+                            <select name="postCategory" class="form-select" aria-label="Default select example">
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="InputPostText" class="form-label">Text</label>
+                            <textarea name="postText" class="form-control" id="InputPostText" rows="50"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Cadaster</button>
+                    </form>
+                </div>
+            </main>
+
+            <%- include('../partials/footer') %>
+        </div>
+        <%- include('../partials/scripts.ejs') %>  
+    </body>
+</html>
