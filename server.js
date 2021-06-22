@@ -46,22 +46,16 @@ passport.use(new LocalStrategy(
             }
         })
     }
-    ));
-    
-    
-    app.use('/public', express.static('public'))
-    
-    app.use(cookieParser())
-    app.use(session({
-        secret:"1234567890123456"
-    }))
-    
-    
-    
-    app.get("/", function(req,res){
-        res.render('pages/home', {user: req.user})
-    })
-    
+));
+
+
+app.use('/public', express.static('public'))
+
+app.use(cookieParser())
+app.use(session({
+    secret:"1234567890123456"
+}))
+
 app.use(passport.initialize())
 app.use(passport.session())
 
@@ -85,8 +79,14 @@ passport.deserializeUser(async function(id, done) {
     }
 });
 
+
+app.get("/", function(req,res){
+    res.render('pages/home', {user: req.user})
+})
+
+
 app.get('/login', function(req, res) {
-    res.render('pages/login', {error: req.flash('error')[0]})
+    res.render('pages/login', {user: req.user, error: req.flash('error')[0]})
 })
 
 app.post('/login',
@@ -102,7 +102,7 @@ app.post('/logout', function(req, res) {
 })
 
 app.get('/register', function(req, res) {
-    res.render('pages/register')
+    res.render('pages/register', {user: req.user})
 })
 
 app.post('/register', function(req, res) {
