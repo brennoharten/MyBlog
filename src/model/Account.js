@@ -16,9 +16,13 @@ Account.init(
         allowNull: false,
         unique: true,
         },
-            password: {
-            type: DataTypes.STRING,
-            allowNull: false,
+        password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        },
+        cellphone: {
+        type: DataTypes.STRING,
+        allowNull: false,
         },
     },
     {

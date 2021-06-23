@@ -14,22 +14,27 @@
                 
                 <div class="form-register mb-5 mt-5">
                     <h3>Post Cadaster</h3>
-                    <form action="/admin/category/add" method="POST">
+                    <form action="/admin/posts/add" method="POST">
                         <div class="mb-3">
                             <label for="InputPostTitle" class="form-label">Title</label>
-                            <input name="postTitle" type="text" class="form-control" id="InputPostTitle" aria-describedby="emailHelp">
+                            <input name="postTitle" type="text" class="form-control" id="InputPostTitle">
                         </div>
                         <div class="mb-3">
                             <label for="InputPostCategory" class="form-label">Category</label>
                             <select name="postCategory" class="form-select" aria-label="Default select example">
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                                <% categories.forEach(function(category){ %>
+                                    <option value="<%= category.id%>"><%= category.name%></option>
+                                <% }); %>
+                                
                             </select>
                         </div>
                         <div class="mb-3">
                             <label for="InputPostText" class="form-label">Text</label>
-                            <textarea name="postText" class="form-control" id="InputPostText" rows="50"></textarea>
+                            <textarea name="postText" class="form-control" id="InputPostText" rows="10"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="InputPostImage" class="form-label">Image URL</label>
+                            <input name="PostImage" type="text" class="form-control" id="InputPostImage">
                         </div>
                         <button type="submit" class="btn btn-primary">Cadaster</button>
                     </form>

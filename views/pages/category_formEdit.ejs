@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <%- include('../partials/head.ejs') %>
+    </head>
+    <body>
+        <div class="container">
+            <%- include('../partials/header.ejs') %>
+
+            <main>
+                
+                <div class="form-register mb-5 mt-5">
+                    <h3>Category Cadaster</h3>
+                    <form action="/admin/category/edit" method="POST">
+                        <div class="mb-3">
+                            <label for="InputCategoryName" class="form-label">Title</label>
+                            <input name="categoryName" type="text" class="form-control" id="InputCategoryName" aria-describedby="emailHelp">
+                        </div>
+                        <div class="mb-3">
+                            <label for="InputCategoryDescription" class="form-label">Description</label>
+                            <input name="categoryDescription" type="text" class="form-control" id="InputCategoryDescription">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </form>
+                </div>
+            </main>
+
+            <%- include('../partials/footer') %>
+        </div>
+        <%- include('../partials/scripts.ejs') %>  
+    </body>
+</html>

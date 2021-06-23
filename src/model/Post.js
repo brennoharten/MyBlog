@@ -10,7 +10,7 @@ Post.init(
             allowNull: false,
         },
         postText: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             allowNull: false,
         },
         imageUrl: {

@@ -18,11 +18,11 @@ router.use(auth.session())
 
 router.get("/", async function(req,res){
 
-    let caegories = await Category.findAll()
+    let categories = await Category.findAll()
 
     res.render('pages/home', {
         user: req.user, 
-        caegories: categories})
+        categories: categories})
 })
 
 
@@ -52,16 +52,18 @@ router.post('/register', function(req, res) {
     
     let username = req.body.username
     let email = req.body.email
+    let cellphone = req.body.cellphone
     let password = req.body.password
     let passwordConfirmation = req.body.passwordConfirmation
 
     if(password === passwordConfirmation) {
 
-        bcrypt.hash(password, 12, function(err, hash) {
+        bcrypt.hash(password, 12, async function(err, hash) {
             
             let account = await Account.create({
                 username: username,
                 email:email,
+                cellphone: cellphone,
                 password:hash
             })
             res.redirect('/login')
